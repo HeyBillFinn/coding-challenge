@@ -6,13 +6,14 @@ class StudentsController < ApplicationController
 
   def create
     @student = Student.new(article_params)
+    @student.uuid = SecureRandom.uuid
 
     @student.save
     redirect_to @student
   end
 
   def show
-    @student = Student.find(params[:id])
+    @student = Student.find_by(uuid: params[:id])
   end
 
   private
