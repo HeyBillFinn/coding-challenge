@@ -1,16 +1,16 @@
 <h1>New Student</h1>
 
-<%= form_for :student do |f| %>
+<%= form_for :student, url: students_path do |f| %>
   <p>
     <%= f.label :name %><br>
     <%= f.text_field :name %>
   </p>
  
   <p>
-    <%= f.label :text %><br>
-    <%= f.text_area :text %>
+    <%= f.label :email_address %><br>
+    <%= f.text_field :email_address %>
   </p>
- 
+
   <p>
     <%= f.submit %>
   </p>
