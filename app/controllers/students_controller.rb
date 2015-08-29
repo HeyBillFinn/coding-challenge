@@ -1,3 +1,5 @@
+require 'SecureRandom'
+
 class StudentsController < ApplicationController
   def new
   end
