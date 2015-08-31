@@ -2,6 +2,11 @@ class StudentsController < ApplicationController
   def new
   end
 
+  def update
+    @student = Student.find(hashids.decode(params[:unique_hash])[0])
+    @student.update_attributes(update_student_params)
+  end
+
   def create
     @student = Student.new(new_student_params)
     @student.save
@@ -16,6 +21,10 @@ class StudentsController < ApplicationController
   private
     def new_student_params
       params.require(:student).permit(:name, :email_address)     
+    end
+
+    def update_student_params
+      params.require(:student).permit(:exercise_response)
     end
 
     def hashids

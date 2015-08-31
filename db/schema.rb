@@ -17,8 +17,9 @@ ActiveRecord::Schema.define(version: 20150829184432) do
     t.string   "name"
     t.string   "email_address"
     t.string   "unique_hash"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.text     "exercise_response"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
 end
