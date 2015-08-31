@@ -3,7 +3,7 @@ class StudentsController < ApplicationController
   end
 
   def create
-    @student = Student.new(article_params)
+    @student = Student.new(new_student_params)
     @student.save
     
     hashids = Hashids.new("7YTg1aYAmIL8FU_uaEMTAw", 10)
@@ -18,7 +18,7 @@ class StudentsController < ApplicationController
   end
 
   private
-    def article_params
+    def new_student_params
       params.require(:student).permit(:name, :email_address)     
     end
 end
