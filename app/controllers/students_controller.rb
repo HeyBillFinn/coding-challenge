@@ -6,19 +6,19 @@ class StudentsController < ApplicationController
     @student = Student.new(new_student_params)
     @student.save
     
-    hashids = Hashids.new("7YTg1aYAmIL8FU_uaEMTAw", 10)
-    @student.unique_hash = hashids.encode(@student.id)
-    @student.save
-
-    redirect_to(student_path(@student.unique_hash))
+    redirect_to(student_path(hashids.encode(@student.id)))
   end
 
   def show
-    @student = Student.find_by(unique_hash: params[:unique_hash])
+    @student = Student.find(hashids.decode(params[:unique_hash])[0])
   end
 
   private
     def new_student_params
       params.require(:student).permit(:name, :email_address)     
+    end
+
+    def hashids
+      @hashIds ||= Hashids.new("7YTg1aYAmIL8FU_uaEMTAw", 10)
     end
 end
