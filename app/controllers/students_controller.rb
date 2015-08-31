@@ -1,5 +1,10 @@
 class StudentsController < ApplicationController
   def new
+    if new_student_params
+      create
+    else
+      render "new"
+    end
   end
 
   def update
@@ -12,7 +17,7 @@ class StudentsController < ApplicationController
     if @student.save
       redirect_to(student_path(hashids.encode(@student.id)))
     else
-      render("new")
+      render "new"
     end
   end
 
@@ -22,7 +27,11 @@ class StudentsController < ApplicationController
 
   private
     def new_student_params
-      params.require(:student).permit(:name, :email_address)     
+      if params[:student].nil? || params[:student].empty?
+        return false
+      else
+        return params.require(:student).permit(:name, :email_address)
+      end
     end
 
     def update_student_params

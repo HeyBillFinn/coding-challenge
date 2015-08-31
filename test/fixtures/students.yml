@@ -1,8 +1,8 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  email_address: MyString
+  name: Hedgehog McGee
+  email_address: mr.hedgehog@example.com
 
 two:
   name: MyString

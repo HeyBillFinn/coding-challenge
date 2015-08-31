@@ -7,7 +7,7 @@
   <div class="text-center">
     <h1>Join the Challenge!</h1>
   </div>
-  <%= form_for :student, url: students_path do |f| %>
+  <%= form_for :student, url: {action: :new} do |f| %>
     <div class="form-group">
       <%= f.label :name, "Name:" %>
       <%= f.text_field :name, class: "form-control" %>
@@ -16,9 +16,11 @@
     <div class="form-group">
       <%= f.label :email_address, "Email Address:" %>
       <%= f.text_field :email_address, class: "form-control" %>
-      <div class="field_error">
-        <%= @student.errors.messages[:email_address][0] %>
-      </div>
+      <% if @student %>
+        <div class="field_error">
+          <%= @student.errors.messages[:email_address][0] %>
+        </div>
+      <% end %>
     </div>
 
     <%= f.submit 'Sign up' %>
