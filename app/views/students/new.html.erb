@@ -1,3 +1,8 @@
+<style>
+  .field_error {
+    color: red;
+  }
+</style>
 <div class="center-block col-xs-4" style="float:none">
   <div class="text-center">
     <h1>Join the Challenge!</h1>
@@ -11,6 +16,9 @@
     <div class="form-group">
       <%= f.label :email_address, "Email Address:" %>
       <%= f.text_field :email_address, class: "form-control" %>
+      <div class="field_error">
+        <%= @student.errors.messages[:email_address][0] %>
+      </div>
     </div>
 
     <%= f.submit 'Sign up' %>

@@ -9,9 +9,11 @@ class StudentsController < ApplicationController
 
   def create
     @student = Student.new(new_student_params)
-    @student.save
-    
-    redirect_to(student_path(hashids.encode(@student.id)))
+    if @student.save
+      redirect_to(student_path(hashids.encode(@student.id)))
+    else
+      render("new")
+    end
   end
 
   def show
