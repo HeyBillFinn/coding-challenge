@@ -3,7 +3,7 @@ class CreateStudents < ActiveRecord::Migration
     create_table :students do |t|
       t.string :name
       t.string :email_address
-      t.string :uuid
+      t.string :unique_hash
 
       t.timestamps null: false
     end
