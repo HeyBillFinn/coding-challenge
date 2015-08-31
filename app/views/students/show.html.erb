@@ -1,19 +1,44 @@
-<p>
-  <strong>Name:</strong>
-  <%= @student.name %>
-</p>
- 
-<p>
-  <strong>Email Address:</strong>
-  <%= @student.email_address %>
-</p>
+<%= stylesheet_link_tag("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css") %>
+<%= javascript_include_tag("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js") %>
+<style type="text/css" media="screen">
+    #editor {
+        height: 200px;
+        position: relative;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
+</style>
 
-<p>
-  <strong>ID:</strong>
-  <%= @student.id %>
-</p>
+<%= form_for :student,
+  url: student_path,
+  method: :put,
+  html: { onsubmit: 'copyCode()' } do |f| %>
+  Hi, <%= @student.name %>
 
-<p>
-  <strong>Unique Hash:</strong>
-  <%= @student.unique_hash %>
-</p>
+  <%= f.hidden_field :id %>
+  <%= f.hidden_field :unique_hash %>
+
+  <div id="editor">
+
+  public class FibonacciCalculator {
+
+      public Long nthNumber(Integer n) {
+          return 1;
+      }
+  }
+  </div>
+  <%= f.text_area :exercise_response, class: "hidden", id: "exercise_response" %>
+  <%= f.submit 'Submit' %>
+<% end %>
+
+<script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+  var editor = ace.edit("editor");
+  editor.setTheme("ace/theme/chrome");
+  editor.getSession().setMode("ace/mode/java");
+  function copyCode() {
+    document.getElementById("exercise_response").value = editor.getValue();
+  }
+</script>
