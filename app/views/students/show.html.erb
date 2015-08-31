@@ -2,34 +2,31 @@
     #editor {
         height: 200px;
         position: relative;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
     }
 </style>
 
-<%= form_for :student,
-  url: student_path,
-  method: :put,
-  html: { onsubmit: 'copyCode()' } do |f| %>
+<div class="center-block col-xs-8" style="float:none">
   Hi, <%= @student.name %>
 
-  <%= f.hidden_field :id %>
-  <%= f.hidden_field :unique_hash %>
+  <%= form_for :student,
+    url: student_path,
+    method: :put,
+    html: { onsubmit: 'copyCode()' } do |f| %>
 
-  <div id="editor">
+    <%= f.hidden_field :unique_hash %>
+    <%= f.text_area :exercise_response, class: "hidden", id: "exercise_response" %>
 
-  public class FibonacciCalculator {
+    <div id="editor">
+public class FibonacciCalculator {
 
-      public Long nthNumber(Integer n) {
-          return 1;
-      }
-  }
-  </div>
-  <%= f.text_area :exercise_response, class: "hidden", id: "exercise_response" %>
-  <%= f.submit 'Submit' %>
-<% end %>
+    public Long nthNumber(Integer n) {
+        return 1;
+    }
+}
+    </div>
+    <%= f.submit 'Submit' %>
+  <% end %>
+</div>
 
 <script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 <script>
