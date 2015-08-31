@@ -1,8 +1,8 @@
 <style type="text/css" media="screen">
-    #editor {
-        height: 200px;
-        position: relative;
-    }
+  #editor {
+    height: 200px;
+    position: relative;
+  }
 </style>
 
 <div class="center-block col-xs-8" style="float:none">
@@ -11,7 +11,7 @@
   <%= form_for :student,
     url: student_path,
     method: :put,
-    html: { onsubmit: 'copyCode()' } do |f| %>
+    html: { onsubmit: 'putResponseInForm()' } do |f| %>
 
     <%= f.hidden_field :unique_hash %>
     <%= f.text_area :exercise_response, class: "hidden", id: "exercise_response" %>
@@ -33,7 +33,7 @@ public class FibonacciCalculator {
   var editor = ace.edit("editor");
   editor.setTheme("ace/theme/chrome");
   editor.getSession().setMode("ace/mode/java");
-  function copyCode() {
+  function putResponseInForm() {
     document.getElementById("exercise_response").value = editor.getValue();
   }
 </script>
