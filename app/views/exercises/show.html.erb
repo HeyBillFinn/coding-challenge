@@ -16,28 +16,52 @@
     <%= f.text_area :exercise_response, class: "hidden", id: "exercise_response" %>
 
     <%= f.select :language, 
-          options_for_select([['Ruby'], ['Java']]),
+          options_for_select(@exercise_snippet.keys),
           {},
           onchange: 'updateTemplate(this)' %>
     <div id="editor">
-<%= File.open('app/views/exercises/snippets/exercise.rb').read %>
     </div>
     <%= f.submit 'Submit' %>
   <% end %>
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 <script>
   var editor = ace.edit("editor");
   editor.setTheme("ace/theme/chrome");
   editor.getSession().setMode("ace/mode/java");
+  editor.$blockScrolling = Infinity
+
+  var changedSnippet = false;
+  editor.getSession().on('change', function() {
+    changedSnippet = true;
+  });
+
   function putResponseInForm() {
     document.getElementById("exercise_response").value = editor.getValue();
   }
-  function updateTemplate(select) {
-    if (select.value === "Ruby") {
-    } else if (select.value === "Java") {
+
+  function updateTemplateWithKey(key) {
+    var exercise_snippets = <%= raw(@exercise_snippet.to_json) %>
+    var curr_snippet = exercise_snippets[key];
+    editor.getSession().setMode(curr_snippet["aceMode"]);
+    if (changedSnippet) {
+      var overwrite = confirm("Overwrite text with new starter template?");
+      if (!overwrite) {
+        return;
+      }
     }
-    alert(select.val);
+    editor.setValue(curr_snippet["text"]);
+    changedSnippet = false;
+    editor.clearSelection()
   }
+
+  function updateTemplate(select) {
+    updateTemplateWithKey(select.value);
+  }
+
+  $(function initTemplate() {
+    updateTemplateWithKey("<%= @exercise_snippet.keys.first %>");
+  });
 </script>
