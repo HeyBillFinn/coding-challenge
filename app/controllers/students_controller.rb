@@ -23,6 +23,7 @@ class StudentsController < ApplicationController
 
   def show
     @student = Student.find(hashids.decode(params[:unique_hash])[0])
+    @student.unique_hash = params[:unique_hash]
   end
 
   private
