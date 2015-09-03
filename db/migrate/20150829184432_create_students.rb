@@ -12,6 +12,8 @@ class CreateStudents < ActiveRecord::Migration
       t.string :state
       t.string :language
       t.text :exercise_response
+      t.datetime :exercise_begin
+      t.datetime :exercise_end
 
       t.timestamps null: false
     end

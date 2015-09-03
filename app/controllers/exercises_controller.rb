@@ -9,6 +9,13 @@ class ExercisesController < ApplicationController
     @student = Student.find_by_unique_hash(hash: params[:student_unique_hash],
                                           exercise_id: params[:id])
     @exercise = @student.exercises.first
+    if @exercise.state == "INITIAL"
+      @exercise.exercise_begin = DateTime.now.new_offset(0)
+      @exercise.state = "IN_PROGRESS"
+      @exercise.save
+    elsif @exercise.state == "COMPLETED"
+      render "done"
+    end
     @exercise_snippet = {}
     @exercise_snippet["Ruby"] =
       { text: File.open('app/views/exercises/snippets/exercise.rb').read,
@@ -22,6 +29,12 @@ class ExercisesController < ApplicationController
     @student = Student.find_by_unique_hash(hash: params[:student_unique_hash],
                                           exercise_id: params[:id])
     @exercise = @student.exercises.first
-    render "show"
+    @exercise.exercise_end = DateTime.now.new_offset(0)
+    @exercise.state = "COMPLETED"
+    puts params
+    @exercise.exercise_response = params[:exercise][:exercise_response]
+    @exercise.language = params[:exercise][:language]
+    @exercise.save
+    render "done"
   end
 end
