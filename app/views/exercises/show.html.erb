@@ -1,6 +1,6 @@
 <style type="text/css" media="screen">
   #editor {
-    height: 200px;
+    height: 500px;
     position: relative;
   }
 </style>
@@ -15,7 +15,7 @@
     <%= f.hidden_field :id %>
     <%= f.text_area :exercise_response, class: "hidden", id: "exercise_response" %>
 
-    <%= f.select :language, 
+    Language: <%= f.select :language,
           options_for_select(@exercise_snippet.keys),
           {},
           onchange: 'updateTemplate(this)' %>
