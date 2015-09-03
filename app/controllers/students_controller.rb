@@ -11,7 +11,7 @@ class StudentsController < ApplicationController
     @student = Student.new(new_student_params)
     if @student.save
       @exercise = @student.exercises.create(state: 'INITIAL')
-      redirect_to(student_exercise_path(@student.unique_hash, @exercise))
+      redirect_to(student_path(@student.unique_hash))
     else
       render "new"
     end
@@ -19,8 +19,6 @@ class StudentsController < ApplicationController
 
   def show
     @student = Student.find_by_unique_hash(hash: params[:unique_hash])
-    redirect_to(student_exercise_path(@student.unique_hash,
-                                      @student.exercises.first))
   end
 
   private

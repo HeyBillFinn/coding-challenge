@@ -1,4 +1,10 @@
 class ExercisesController < ApplicationController
+  def index
+    @student = Student.find_by_unique_hash(hash: params[:student_unique_hash])
+    redirect_to(student_exercise_path(@student.unique_hash,
+                                      @student.exercises.first))
+  end
+
   def show
     @student = Student.find_by_unique_hash(hash: params[:student_unique_hash],
                                           exercise_id: params[:id])

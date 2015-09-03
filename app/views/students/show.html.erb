@@ -1,0 +1,18 @@
+<div class="center-block col-xs-8" style="float:none">
+  <div>
+    Welcome, <%= @student.name %> to the Backstop coding challenge!
+  </div>
+
+  On the next screen, you will be presented with a coding challenge. A timer will
+  start as soon as you navigate to the next page, and it will stop when you
+  submit your solution. The person who submits a correct solution in the least
+  amount of time will be declared the winner of the competition and will be
+  awarded the grand prize! It should take you no more than 30 minutes to 
+  complete the challenge, so when you're ready, go ahead and click that 
+  button, and start coding. Good luck!
+
+  <div class="right-block">
+  <%= button_to("I'm ready!", student_exercises_path(@student.unique_hash),
+               method: 'get') %>
+   <div>
+</div>
