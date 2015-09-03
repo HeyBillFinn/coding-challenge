@@ -13,13 +13,22 @@
 
 ActiveRecord::Schema.define(version: 20150829184432) do
 
-  create_table "students", force: :cascade do |t|
-    t.string   "name"
-    t.string   "email_address"
-    t.string   "unique_hash"
+  create_table "exercises", force: :cascade do |t|
+    t.integer  "student_id"
+    t.string   "state"
+    t.string   "language"
     t.text     "exercise_response"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+  end
+
+  add_index "exercises", ["student_id"], name: "index_exercises_on_student_id"
+
+  create_table "students", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email_address"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
 end

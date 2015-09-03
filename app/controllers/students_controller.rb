@@ -7,23 +7,20 @@ class StudentsController < ApplicationController
     end
   end
 
-  def update
-    @student = Student.find(hashids.decode(params[:unique_hash])[0])
-    @student.update_attributes(update_student_params)
-  end
-
   def create
     @student = Student.new(new_student_params)
     if @student.save
-      redirect_to(student_path(hashids.encode(@student.id)))
+      @exercise = @student.exercises.create(state: 'INITIAL')
+      redirect_to(student_exercise_path(@student.unique_hash, @exercise))
     else
       render "new"
     end
   end
 
   def show
-    @student = Student.find(hashids.decode(params[:unique_hash])[0])
-    @student.unique_hash = params[:unique_hash]
+    @student = Student.find_by_unique_hash(hash: params[:unique_hash])
+    redirect_to(student_exercise_path(@student.unique_hash,
+                                      @student.exercises.first))
   end
 
   private
@@ -33,13 +30,5 @@ class StudentsController < ApplicationController
       else
         return params.require(:student).permit(:name, :email_address)
       end
-    end
-
-    def update_student_params
-      params.require(:student).permit(:exercise_response)
-    end
-
-    def hashids
-      @hashIds ||= Hashids.new("7YTg1aYAmIL8FU_uaEMTAw", 10)
     end
 end

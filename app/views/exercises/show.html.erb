@@ -8,21 +8,19 @@
 <div class="center-block col-xs-8" style="float:none">
   Hi, <%= @student.name %>
 
-  <%= form_for :student,
-    url: student_path,
+  <%= form_for :exercise,
     method: :put,
     html: { onsubmit: 'putResponseInForm()' } do |f| %>
 
-    <%= f.hidden_field :unique_hash %>
+    <%= f.hidden_field :id %>
     <%= f.text_area :exercise_response, class: "hidden", id: "exercise_response" %>
 
+    <%= f.select :language, 
+          options_for_select([['Ruby'], ['Java']]),
+          {},
+          onchange: 'updateTemplate(this)' %>
     <div id="editor">
-public class FibonacciCalculator {
-
-    public Long nthNumber(Integer n) {
-        return 1;
-    }
-}
+<%= File.open('app/views/exercises/snippets/exercise.rb').read %>
     </div>
     <%= f.submit 'Submit' %>
   <% end %>
@@ -35,5 +33,11 @@ public class FibonacciCalculator {
   editor.getSession().setMode("ace/mode/java");
   function putResponseInForm() {
     document.getElementById("exercise_response").value = editor.getValue();
+  }
+  function updateTemplate(select) {
+    if (select.value === "Ruby") {
+    } else if (select.value === "Java") {
+    }
+    alert(select.val);
   }
 </script>
