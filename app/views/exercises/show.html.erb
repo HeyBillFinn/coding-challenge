@@ -6,7 +6,7 @@
 </style>
 
 <div class="center-block col-xs-8" style="float:none">
-  Hi, <%= @student.name %>
+  <%= render("exercises/intro.html.erb")%>
 
   <%= form_for :exercise,
     method: :put,
